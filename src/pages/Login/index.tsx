@@ -10,13 +10,15 @@ import {
 
 import { EyeFilledIcon } from '../../components/Icons/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '../../components/Icons/EyeSlashFilledIcon';
+import { Profile } from '../../components/Icons/Profile';
+import { Key } from '../../components/Icons/Key';
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const [isRemember, setIsRemember] = useState(true);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
@@ -24,26 +26,33 @@ export default function Login() {
     <section className="flex flex-col justify-center items-center min-h-screen min-w-full">
       <Card className="py-4">
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
-          <h1 className="font-bold text-large">USER LOGIN</h1>
+          <h1 className="font-bold text-large">SIGN IN</h1>
         </CardHeader>
-        <CardBody className="overflow-visible py-2">
+        <CardBody className="overflow-visible ">
           <form
-            onSubmit={onSubmit}
             className="flex flex-col"
+            onSubmit={handleSubmit}
           >
             <Input
-              size="md"
-              type="email"
-              label="Email"
+              type="text"
+              size="sm"
+              label="Username"
               variant="bordered"
-              placeholder="Enter your email"
-              className="mb-4"
+              labelPlacement="outside"
+              placeholder="Username"
+              className="max-w-xs mb-2"
+              startContent={<Profile />}
             />
 
             <Input
+              size="sm"
               label="Password"
               variant="bordered"
-              placeholder="Enter your password"
+              labelPlacement="outside"
+              placeholder="Password"
+              description=""
+              radius="sm"
+              startContent={<Key />}
               endContent={
                 <button
                   className="focus:outline-none"
