@@ -1,3 +1,3 @@
 export default function Register() {
-	return <section>index</section>;
+  return <section>index</section>;
 }
