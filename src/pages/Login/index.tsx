@@ -7,19 +7,39 @@ import {
   CardBody,
   Checkbox,
 } from '@nextui-org/react';
+import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 
 import { EyeFilledIcon } from '../../components/Icons/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '../../components/Icons/EyeSlashFilledIcon';
 import { Profile } from '../../components/Icons/Profile';
 import { Key } from '../../components/Icons/Key';
 
+interface loginTypes extends FieldValues {
+  username: string;
+  password: string;
+  // remember: boolean;
+}
+
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const [isRemember, setIsRemember] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginTypes>();
+
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<loginTypes> = async (data) => {
+    try {
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+    }
   };
 
   return (
@@ -31,9 +51,10 @@ export default function Login() {
         <CardBody className="overflow-visible ">
           <form
             className="flex flex-col"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <Input
+              id="username"
               type="text"
               size="sm"
               label="Username"
@@ -42,9 +63,13 @@ export default function Login() {
               placeholder="Username"
               className="max-w-xs mb-2"
               startContent={<Profile />}
+              {...register('username', {
+                required: 'Username is required',
+              })}
             />
 
             <Input
+              id="password"
               size="sm"
               label="Password"
               variant="bordered"
