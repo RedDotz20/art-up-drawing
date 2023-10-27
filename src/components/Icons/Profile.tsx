@@ -1,11 +1,11 @@
-const Profile = () => {
+const Profile = ({ isError }: { isError: Boolean }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke={isError ? 'red' : 'currentColor'}
       className="w-4 h-4"
     >
       <path
