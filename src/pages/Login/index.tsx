@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  FieldValues,
+  SubmitHandler,
+} from 'react-hook-form';
+
+import { useNavigate } from 'react-router-dom';
 
 import {
   Card,
@@ -8,6 +15,7 @@ import {
   CardHeader,
   CardBody,
   Checkbox,
+  Divider,
 } from '@nextui-org/react';
 
 import { EyeFilledIcon } from '../../components/Icons/EyeFilledIcon';
@@ -21,18 +29,20 @@ interface loginTypes extends FieldValues {
 }
 
 export default function Login() {
+  const navigate = useNavigate();
   const {
-    register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
-  } = useForm<loginTypes>();
-
-  const formDataOnChange = watch('username');
-  console.log(formDataOnChange);
+  } = useForm<loginTypes>({
+    defaultValues: {
+      username: '',
+      password: '',
+      rememberme: false,
+    },
+  });
 
   const [isVisible, setIsVisible] = useState(false);
-  const [isRemember, setIsRemember] = useState(true);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit: SubmitHandler<loginTypes> = async (data) => {
@@ -64,76 +74,119 @@ export default function Login() {
             className="flex flex-col"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Input
-              isClearable
-              id="username"
-              className="max-w-xs mb-2"
-              type="text"
-              size="sm"
-              label="Username"
-              variant="bordered"
-              labelPlacement="outside"
-              placeholder="Username"
-              isInvalid={userNameError.requiredError}
-              errorMessage={
-                userNameError.requiredError && 'Username is Required'
-              }
-              startContent={<Profile isError={userNameError.requiredError} />}
-              {...register('username', { required: true })}
+            <Controller
+              name="username"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  isClearable
+                  onClear={() => field.onChange('')}
+                  id="username"
+                  className="max-w-xs mb-2"
+                  type="text"
+                  size="sm"
+                  label="Username"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  placeholder="Username"
+                  isInvalid={userNameError.requiredError}
+                  errorMessage={
+                    userNameError.requiredError && 'Username is Required'
+                  }
+                  startContent={
+                    <Profile isError={userNameError.requiredError} />
+                  }
+                />
+              )}
             />
 
-            <Input
-              id="password"
-              size="sm"
-              label="Password"
-              variant="bordered"
-              labelPlacement="outside"
-              placeholder="Password"
-              description=""
-              radius="sm"
-              isInvalid={passwordError.requiredError}
-              errorMessage={
-                passwordError.requiredError && 'Password is Required'
-              }
-              {...register('password', {
-                required: 'Password is Required',
-                min: 8,
-              })}
-              startContent={<Key isError={passwordError.requiredError} />}
-              endContent={
-                <button
-                  className="focus:outline-none"
-                  type="button"
-                  onClick={toggleVisibility}
+            <Controller
+              name="password"
+              control={control}
+              rules={{ required: true, minLength: 8 }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="password"
+                  size="sm"
+                  label="Password"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  placeholder="Password"
+                  description=""
+                  radius="sm"
+                  isInvalid={
+                    passwordError.requiredError || passwordError.minLengthError
+                  }
+                  errorMessage={
+                    (passwordError.requiredError && 'Password is Required') ||
+                    (passwordError.minLengthError &&
+                      'Password must be at least 8 characters')
+                  }
+                  startContent={
+                    <Key
+                      isError={
+                        passwordError.requiredError ||
+                        passwordError.minLengthError
+                      }
+                    />
+                  }
+                  endContent={
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                    >
+                      {isVisible ? (
+                        <EyeSlashFilledIcon className="text-xl text-default-400 pointer-events-none" />
+                      ) : (
+                        <EyeFilledIcon className="text-xl text-default-400 pointer-events-none" />
+                      )}
+                    </button>
+                  }
+                  type={isVisible ? 'text' : 'password'}
+                  className="max-w-xs mb-2"
+                />
+              )}
+            />
+
+            <Controller
+              name="rememberme"
+              control={control}
+              render={({ field }) => (
+                <Checkbox
+                  {...field}
+                  className="mb-2"
+                  isSelected={field.value}
+                  onValueChange={() => field.onChange(!field.value)}
+                  size="sm"
                 >
-                  {isVisible ? (
-                    <EyeSlashFilledIcon className="text-xl text-default-400 pointer-events-none" />
-                  ) : (
-                    <EyeFilledIcon className="text-xl text-default-400 pointer-events-none" />
-                  )}
-                </button>
-              }
-              type={isVisible ? 'text' : 'password'}
-              className="max-w-xs mb-2"
+                  Remember me
+                </Checkbox>
+              )}
             />
-
-            <Checkbox
-              className="mb-2"
-              isSelected={isRemember}
-              onValueChange={setIsRemember}
-              size="sm"
-            >
-              Remember me
-            </Checkbox>
 
             <Button
               type="submit"
               color="primary"
               isLoading={false}
             >
-              Sign In
+              SIGN IN
             </Button>
           </form>
+          <Divider className="my-2" />
+
+          <h2 className="text-xs text-center font-semibold">
+            Don't have an Account? Register{'  '}
+            <span
+              className="cursor-pointer select-none underline-offset-4 text-blue-500 hover:text-blue-700"
+              onClick={() => navigate('/register')}
+            >
+              Here
+            </span>
+          </h2>
         </CardBody>
       </Card>
     </section>
