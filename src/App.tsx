@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-// import { lazy, Suspense } from 'react';
+
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
+import Drawing from './pages/Drawing';
 
 export default function App() {
   return (
@@ -30,6 +31,10 @@ export default function App() {
         <Route
           path="/home"
           element={<Dashboard />}
+        />
+        <Route
+          path="/draw"
+          element={<Drawing />}
         />
         <Route
           path="*"
