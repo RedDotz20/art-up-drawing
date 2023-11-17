@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import useDrawingStore from './store/drawingStore';
+import UserAvatar from './components/UserAvatar';
 import Options from './components/Options';
 import Menu from './components/Menu';
 
@@ -66,8 +67,9 @@ export default function Drawing() {
   };
 
   return (
-    <div className="bg-slate-700 h-screen w-full flex flex-col items-center justify-center">
-      <div className="flex bg-white absolute top-5 shadow-2xl p-4 min-w-[1000px] rounded-xl">
+    <div className="bg-slate-700 h-screen w-full flex flex-col items-center justify-center relative">
+      <UserAvatar />
+      <div className="flex flex-col gap-4 bg-white absolute top-5 left-4 shadow-2xl p-4 rounded-xl min-w-[250px]">
         <Options canvasRef={canvasRef} />
         <Menu
           canvasRef={canvasRef}
@@ -82,8 +84,8 @@ export default function Drawing() {
           onMouseUp={endDrawing}
           onMouseMove={draw}
           ref={canvasRef}
-          width={1280}
-          height={720}
+          width={1000}
+          height={600}
         />
       </div>
     </div>

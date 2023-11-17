@@ -1,4 +1,5 @@
-import { Input, Slider, Button } from '@nextui-org/react';
+import { Slider, Button } from '@nextui-org/react';
+
 import { GrPowerReset } from 'react-icons/gr';
 import { BiSolidEraser } from 'react-icons/bi';
 
@@ -27,15 +28,17 @@ export default function Menu({ canvasRef, ctxRef }: MenuProps) {
   };
 
   return (
-    <>
-      <Input
-        label="Brush Color"
-        labelPlacement="outside-left"
-        type="color"
-        onChange={(e) => {
-          drawingStore.setLineColor(e.target.value);
-        }}
-      />
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <h1>Brush Color</h1>
+        <input
+          className="max-w-[40px] min-w-[40px]"
+          type="color"
+          onChange={(e) => {
+            drawingStore.setLineColor(e.target.value);
+          }}
+        />
+      </div>
 
       <Slider
         label="Brush Width"
@@ -59,32 +62,34 @@ export default function Menu({ canvasRef, ctxRef }: MenuProps) {
         onChange={drawingStore.setLineOpacity}
       />
 
-      <Button
-        isIconOnly
-        color="secondary"
-        onClick={resetCanvas}
-      >
-        <GrPowerReset />
-      </Button>
-      <Button
-        isIconOnly
-        color={drawingStore.isErasing ? 'danger' : 'default'}
-        onClick={toggleEraser}
-      >
-        <BiSolidEraser />
-        {/* {drawingStore.isErasing ? 'Disable Eraser' : 'Enable Eraser'} */}
-      </Button>
-
-      <Slider
-        label="Eraser Size"
-        step={1}
-        minValue={5}
-        maxValue={50}
-        defaultValue={5}
-        className="max-w-md"
-        value={drawingStore.eraserSize}
-        onChange={drawingStore.setEraserSize}
-      />
-    </>
+      <div className="flex gap-2 justify-center">
+        <Button
+          isIconOnly
+          color="secondary"
+          onClick={resetCanvas}
+        >
+          <GrPowerReset />
+        </Button>
+        <Button
+          isIconOnly
+          color={drawingStore.isErasing ? 'danger' : 'default'}
+          onClick={toggleEraser}
+        >
+          <BiSolidEraser />
+        </Button>
+      </div>
+      {drawingStore.isErasing && (
+        <Slider
+          label="Eraser Size"
+          step={1}
+          minValue={5}
+          maxValue={50}
+          defaultValue={5}
+          className="max-w-md"
+          value={drawingStore.eraserSize}
+          onChange={drawingStore.setEraserSize}
+        />
+      )}
+    </div>
   );
 }

@@ -58,10 +58,10 @@ export default function Options({ canvasRef }: OptionsProps) {
     <Dropdown>
       <DropdownTrigger>
         <Button
-          isIconOnly
-          aria-label="menu"
+          aria-label="Options"
+          startContent={<GiHamburgerMenu className={iconClasses} />}
         >
-          <GiHamburgerMenu />
+          Options
         </Button>
       </DropdownTrigger>
       <DropdownMenu
