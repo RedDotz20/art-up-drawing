@@ -1,12 +1,17 @@
-import { Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
+import { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { AuthenticationGuard } from './components/AuthenticationGuard';
+
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
-import Register from './pages/Register';
 import Drawing from './pages/Drawing';
-
 import Home from './pages/Home';
+
 export default function App() {
+  // const { isAuthenticated } = useAuth0();
+  // const navigate = useNavigate();
+
   return (
     <main className="flex flex-col h-screen w-full justify-center items-center bg-[#3b3b3b]">
       <Routes>
@@ -15,21 +20,12 @@ export default function App() {
           element={<Home />}
         />
         <Route
-          path="/login"
-          element={<Login />}
-        />
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-        <Route
           path="/home"
-          element={<Dashboard />}
+          element={<AuthenticationGuard component={Dashboard} />}
         />
         <Route
           path="/draw"
-          element={<Drawing />}
+          element={<AuthenticationGuard component={Drawing} />}
         />
         <Route
           path="*"
