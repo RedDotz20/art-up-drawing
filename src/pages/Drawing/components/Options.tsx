@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiSolidDownload } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaSave } from 'react-icons/fa';
 
 type OptionsProps = { canvasRef: React.RefObject<HTMLCanvasElement> };
 const iconClasses =
@@ -54,6 +55,13 @@ export default function Options({ canvasRef }: OptionsProps) {
     }
   };
 
+  //TODO: Save Canvas to DB
+  const handleSaveCanvas = () => {
+    if (canvasRef.current) {
+      const imageData = canvasRef.current.toDataURL();
+    }
+  };
+
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -68,6 +76,13 @@ export default function Options({ canvasRef }: OptionsProps) {
         variant="faded"
         aria-label="Dropdown menu with icons"
       >
+        <DropdownItem
+          key="save"
+          startContent={<FaSave className={iconClasses} />}
+          onClick={handleSaveCanvas}
+        >
+          Save
+        </DropdownItem>
         <DropdownItem
           key="upload"
           startContent={<AiOutlineCloudUpload className={iconClasses} />}

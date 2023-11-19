@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Routes, Route } from 'react-router-dom';
 import { AuthenticationGuard } from './components/AuthenticationGuard';
 
 import NotFound from './pages/NotFound';
@@ -9,9 +7,6 @@ import Drawing from './pages/Drawing';
 import Home from './pages/Home';
 
 export default function App() {
-  // const { isAuthenticated } = useAuth0();
-  // const navigate = useNavigate();
-
   return (
     <main className="flex flex-col h-screen w-full justify-center items-center bg-[#3b3b3b]">
       <Routes>

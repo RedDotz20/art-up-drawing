@@ -8,7 +8,7 @@ import { NextUIProvider } from '@nextui-org/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { ErrorBoundery } from './ErrorBoundery.tsx';
+import { ErrorBoundery } from './components/ErrorBoundery.tsx';
 
 const queryClient = new QueryClient();
 
