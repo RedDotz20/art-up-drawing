@@ -1,24 +1,26 @@
 import { axiosInstance } from './axios';
 
-export const saveCanvasAPI = async (imageData: string) => {
+export const createCanvasAPi = async (userId: string, imageData?: string) => {
   return await axiosInstance
-    .post('/saveCanvas', { imageData: imageData })
+    .post('/canvas/createCanvas', {
+      userId: userId,
+      imageData: imageData || null,
+    })
     .then((response) => {
-      console.log('Canvas saved:', response.data);
-      return response.data;
+      return response;
     })
     .catch((error) => {
-      console.error('Error saving canvas:', error);
+      console.error('Error Saving Canvas: ', error);
     });
 };
 
 export const getCanvasAPI = async (imageId: string) => {
   return await axiosInstance
-    .get(`/getCanvas/${imageId}`)
+    .get(`/canvas/getCanvas/${imageId}`)
     .then((response) => {
-      return response.data;
+      return response;
     })
     .catch((error) => {
-      console.error('Error getting canvas:', error);
+      console.error('Error Loading Canvas:', error);
     });
 };

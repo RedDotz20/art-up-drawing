@@ -19,13 +19,17 @@ export default function App() {
           element={<AuthenticationGuard component={Dashboard} />}
         />
         <Route
-          path="/draw"
+          path="/canvas/:canvasId"
           element={<AuthenticationGuard component={Drawing} />}
         />
         <Route
           path="*"
           element={<NotFound />}
         />
+        {/* <Route
+            path="/draw"
+            element={<AuthenticationGuard component={Drawing} />}
+          /> */}
       </Routes>
     </main>
   );

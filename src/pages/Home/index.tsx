@@ -1,6 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { LoginButton } from '../Home/components/LoginButton';
-import { LogoutButton } from '../Home/components/LogoutButton';
 import { SignupButton } from '../Home/components/SignUpButton';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
