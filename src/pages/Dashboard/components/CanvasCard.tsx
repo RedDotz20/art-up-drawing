@@ -1,29 +1,31 @@
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { Card, CardHeader } from '@nextui-org/react';
+import { FaPencilRuler } from 'react-icons/fa';
+import { SlOptions } from 'react-icons/sl';
 
-export default function CanvasCard() {
+interface CanvasCardProps {
+  name: string;
+}
+
+export default function CanvasCard({ name }: CanvasCardProps) {
   return (
-    <div>
-      <Card
-        shadow="sm"
-        isPressable
-        onPress={() => console.log('item pressed')}
-      >
-        <CardBody className="overflow-visible p-0">
-          <Image
-            shadow="sm"
-            radius="lg"
-            width="100"
-            height="50"
-            alt="test"
-            className="w-full object-cover h-[140px]"
-            // src={item.img}
-          />
-        </CardBody>
-        <CardFooter className="text-small justify-between">
-          <b>title</b>
-          <p className="text-default-500">description</p>
-        </CardFooter>
-      </Card>
-    </div>
+    <Card
+      isHoverable
+      className="min-w-[300px] flex items-center justify-center cursor-pointer"
+    >
+      <CardHeader className="flex gap-6">
+        <div className="pl-2">
+          <FaPencilRuler size={20} />
+        </div>
+        <div className="flex flex-col">
+          <p className="text-md select-none">{name}</p>
+        </div>
+        <div
+          className="ml-auto mr-2"
+          onClick={() => console.log('hello')}
+        >
+          <SlOptions />
+        </div>
+      </CardHeader>
+    </Card>
   );
 }

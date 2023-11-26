@@ -3,11 +3,35 @@ import useDrawingStore from './store/drawingStore';
 import UserAvatar from './components/UserAvatar';
 import Options from './components/Options';
 import Menu from './components/Menu';
+import { useParams } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { updateCanvasApi } from '../../api/canvasAPI';
 
 export default function Drawing() {
+  const { canvasId } = useParams();
+
   const drawingStore = useDrawingStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  const updateCanvasMutation = useMutation({
+    mutationFn: (canvas: { canvasId: string; imageData: string }) => {
+      return updateCanvasApi(canvas);
+    },
+  });
+
+  const updateCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const imageData = canvas.toDataURL();
+      const canvasData = { canvasId: canvasId!, imageData: imageData };
+      updateCanvasMutation.mutate(canvasData);
+    }
+  };
+
+  useEffect(() => {
+    updateCanvas();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,9 +40,13 @@ export default function Drawing() {
       if (ctx) {
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.globalAlpha = Number(drawingStore.lineOpacity); // Convert SliderValue to number
+
+        // Convert SliderValue to number
+        ctx.globalAlpha = Number(drawingStore.lineOpacity);
         ctx.strokeStyle = drawingStore.lineColor;
-        ctx.lineWidth = Number(drawingStore.lineWidth); // Convert SliderValue to number
+
+        // Convert SliderValue to number
+        ctx.lineWidth = Number(drawingStore.lineWidth);
         ctxRef.current = ctx;
         ctxRef.current = ctx;
       }
@@ -50,8 +78,7 @@ export default function Drawing() {
     }
 
     if (drawingStore.isErasing) {
-      // Use a white color for erasing (you can set it to the canvas background color)
-      ctxRef.current.strokeStyle = 'white';
+      ctxRef.current.strokeStyle = 'white'; // Use a white color for erasing
       ctxRef.current.lineWidth = Number(drawingStore.eraserSize); // Set the eraser size
     } else {
       ctxRef.current.strokeStyle = drawingStore.lineColor; // Switch back to the drawing color

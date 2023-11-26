@@ -13,24 +13,26 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const generateCanvasMutation = useMutation({
-    mutationFn: (userId: string, imageData?: string) => {
-      return createCanvasAPi(userId, imageData);
+    mutationFn: (userId: string) => {
+      return createCanvasAPi(userId);
     },
   });
 
   const generateCanvas = () => {
     const userAuthId = user!.sub!.substring(6);
-    generateCanvasMutation.mutate(userAuthId);
+    const newCanvas = generateCanvasMutation.mutate(userAuthId);
+    return newCanvas;
   };
 
   useEffect(() => {
     if (generateCanvasMutation.data) {
-      navigate(`/canvas/${generateCanvasMutation.data.data.data.id}`);
+      const generatedCanvasId = generateCanvasMutation.data.data.data.id;
+      navigate(`/canvas/${generatedCanvasId}`);
     }
   }, [generateCanvasMutation.data, navigate]);
 
   return (
-    <section className="h-screen w -full ">
+    <section className="h-screen w-full ">
       <NavBar />
       <div className="px-12 py-8 text-white">
         <div className="flex items-center w-full justify-between mb-6">
@@ -45,9 +47,7 @@ export default function Dashboard() {
           {generateCanvasMutation.isSuccess && <>successfully add</>}
         </div>
         <div className="flex flex-wrap gap-4 justify-center items-center px-4">
-          <CanvasCard />
-          <CanvasCard />
-          <CanvasCard />
+          <CanvasCard name="untitled" />
         </div>
       </div>
     </section>

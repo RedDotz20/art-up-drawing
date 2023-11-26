@@ -1,10 +1,27 @@
 import { axiosInstance } from './axios';
 
-export const createCanvasAPi = async (userId: string, imageData?: string) => {
+export const createCanvasAPi = async (userId: string) => {
   return await axiosInstance
     .post('/canvas/createCanvas', {
       userId: userId,
-      imageData: imageData || null,
+      imageData: null,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error Saving Canvas: ', error);
+    });
+};
+
+export const updateCanvasApi = async (canvas: {
+  canvasId: string;
+  imageData: string;
+}) => {
+  return await axiosInstance
+    .put('/canvas/updateCanvas', {
+      id: canvas.canvasId,
+      imageData: canvas.imageData,
     })
     .then((response) => {
       return response;
