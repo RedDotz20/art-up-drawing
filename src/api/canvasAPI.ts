@@ -1,6 +1,6 @@
 import { axiosInstance } from './axios';
 
-export const createCanvasAPi = async (userId: string) => {
+export const createCanvasApi = async (userId: string) => {
   return await axiosInstance
     .post('/canvas/createCanvas', {
       userId: userId,

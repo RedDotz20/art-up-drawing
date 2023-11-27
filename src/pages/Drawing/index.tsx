@@ -1,33 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import useDrawingStore from './store/drawingStore';
 import UserAvatar from './components/UserAvatar';
 import Options from './components/Options';
 import Menu from './components/Menu';
-import { useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { updateCanvasApi } from '../../api/canvasAPI';
+import useDrawingStore from './store/drawingStore';
+import { useUpdateCanvas } from '../../hooks/useUpdateCanvas';
 
 export default function Drawing() {
-  const { canvasId } = useParams();
-
   const drawingStore = useDrawingStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-
-  const updateCanvasMutation = useMutation({
-    mutationFn: (canvas: { canvasId: string; imageData: string }) => {
-      return updateCanvasApi(canvas);
-    },
-  });
-
-  const updateCanvas = () => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const imageData = canvas.toDataURL();
-      const canvasData = { canvasId: canvasId!, imageData: imageData };
-      updateCanvasMutation.mutate(canvasData);
-    }
-  };
+  const { updateCanvas } = useUpdateCanvas(canvasRef);
 
   useEffect(() => {
     updateCanvas();

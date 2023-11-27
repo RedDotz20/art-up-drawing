@@ -1,35 +1,10 @@
-// import { useEffect } from 'react';
 import NavBar from './components/Navbar';
 import CanvasCard from './components/CanvasCard';
 import { Button } from '@nextui-org/react';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { createCanvasAPi } from '../../api/canvasAPI';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import { useGenerateCanvas } from '../../hooks/useGenerateCanvas';
 
 export default function Dashboard() {
-  const { user } = useAuth0();
-  const navigate = useNavigate();
-
-  const generateCanvasMutation = useMutation({
-    mutationFn: (userId: string) => {
-      return createCanvasAPi(userId);
-    },
-  });
-
-  const generateCanvas = () => {
-    const userAuthId = user!.sub!.substring(6);
-    const newCanvas = generateCanvasMutation.mutate(userAuthId);
-    return newCanvas;
-  };
-
-  useEffect(() => {
-    if (generateCanvasMutation.data) {
-      const generatedCanvasId = generateCanvasMutation.data.data.data.id;
-      navigate(`/canvas/${generatedCanvasId}`);
-    }
-  }, [generateCanvasMutation.data, navigate]);
+  const { generateCanvasMutation, generateCanvas } = useGenerateCanvas();
 
   return (
     <section className="h-screen w-full ">
