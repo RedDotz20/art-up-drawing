@@ -31,9 +31,24 @@ export const updateCanvasApi = async (canvas: {
     });
 };
 
-export const getCanvasAPI = async (imageId: string) => {
+export const getCanvasApi = async (imageId: string) => {
   return await axiosInstance
     .get(`/canvas/getCanvas/${imageId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error Loading Canvas:', error);
+    });
+};
+
+export const loadCanvasApi = async (userId: string) => {
+  return await axiosInstance
+    .get('/canvas/loadUserCanvas', {
+      params: {
+        userId: userId,
+      },
+    })
     .then((response) => {
       return response;
     })

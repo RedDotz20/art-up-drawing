@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createCanvasApi } from '../api/canvasAPI';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
+import { createCanvasApi } from '../api/canvasAPI';
 
 export function useGenerateCanvas() {
   const { user } = useAuth0();
@@ -14,7 +14,7 @@ export function useGenerateCanvas() {
       return createCanvasApi(userId);
     },
     onSuccess: (newImageData) => {
-      //? update data view directly via setQueryData
+      //? Update Canvas View Directly
       queryClient.setQueryData(['userCanvasList'], newImageData);
     },
     onError: (error) => {
