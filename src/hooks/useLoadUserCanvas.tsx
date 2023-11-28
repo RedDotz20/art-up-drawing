@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { loadCanvasApi } from '../api/canvasAPI';
 import { useAuth0 } from '@auth0/auth0-react';
+import { loadCanvasApi } from '../api/canvasAPI';
 
 export function useLoadUserCanvas() {
   const { user } = useAuth0();
@@ -9,8 +9,9 @@ export function useLoadUserCanvas() {
   const loadUserCanvas = useQuery({
     queryKey: ['userCanvasList'],
     queryFn: () => loadCanvasApi(userAuthId),
-    retry: 2,
-    refetchOnMount: true,
+    retry: 4,
+    refetchOnMount: 'always',
+    staleTime: Infinity,
   });
 
   return { loadUserCanvas };

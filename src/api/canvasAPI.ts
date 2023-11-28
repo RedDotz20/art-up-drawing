@@ -56,3 +56,39 @@ export const loadCanvasApi = async (userId: string) => {
       console.error('Error Loading Canvas:', error);
     });
 };
+
+export const editCanvasApi = async (canvas: {
+  userId: string;
+  canvasId: string;
+}) => {
+  return await axiosInstance
+    .post('/canvas/editCanvas', {
+      id: canvas.canvasId,
+      userId: canvas.userId,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error Selecting Canvas: ', error);
+    });
+};
+
+export const deleteCanvasApi = async (canvas: {
+  userId: string;
+  canvasId: string;
+}) => {
+  return await axiosInstance
+    .delete('/canvas/deleteCanvas', {
+      params: {
+        id: canvas.canvasId,
+        userId: canvas.userId,
+      },
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error Deleting Canvas: ', error);
+    });
+};

@@ -1,18 +1,40 @@
 import React, { useEffect, useRef } from 'react';
+import { useDrawingStore } from './store/drawingStore';
+import { useUpdateCanvas } from '../../hooks/useUpdateCanvas';
+import { useActiveUserCanvasStore } from '../../store/activeUserCanvasStore';
+import { decodeBase64 } from '../../utils/decodeBase64String';
+
 import UserAvatar from './components/UserAvatar';
 import Options from './components/Options';
 import Menu from './components/Menu';
-import useDrawingStore from './store/drawingStore';
-import { useUpdateCanvas } from '../../hooks/useUpdateCanvas';
 
 export default function Drawing() {
   const drawingStore = useDrawingStore();
+  const activeUserCanvas = useActiveUserCanvasStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+
   const { updateCanvas } = useUpdateCanvas(canvasRef);
 
   useEffect(() => {
-    updateCanvas();
+    if (activeUserCanvas.activeImageData) {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const decodedImage = decodeBase64(activeUserCanvas.activeImageData);
+          const image = new Image();
+          image.onload = function () {
+            ctx.drawImage(image, 0, 0);
+          };
+          image.src = URL.createObjectURL(
+            new Blob([decodedImage], { type: 'image/png' })
+          );
+        }
+      }
+    } else {
+      updateCanvas();
+    }
   }, []);
 
   useEffect(() => {

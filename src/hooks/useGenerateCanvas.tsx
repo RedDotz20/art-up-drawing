@@ -15,7 +15,7 @@ export function useGenerateCanvas() {
     },
     onSuccess: (newImageData) => {
       //? Update Canvas View Directly
-      queryClient.setQueryData(['userCanvasList'], newImageData);
+      // queryClient.setQueryData(['userCanvasList'], newImageData);
     },
     onError: (error) => {
       console.log(error);

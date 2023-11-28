@@ -1,11 +1,20 @@
-import NavBar from './components/Navbar';
-import CanvasCard from './components/CanvasCard';
+import { useEffect } from 'react';
 import { Button } from '@nextui-org/react';
 import { useGenerateCanvas } from '../../hooks/useGenerateCanvas';
 import { useLoadUserCanvas } from '../../hooks/useLoadUserCanvas';
+import { useActiveUserCanvasStore } from '../../store/activeUserCanvasStore';
+import NavBar from './components/Navbar';
+import CanvasCard from './components/CanvasCard';
 
 export default function Dashboard() {
+  const activeUserCanvas = useActiveUserCanvasStore();
   const { generateCanvasMutation, generateCanvas } = useGenerateCanvas();
+
+  useEffect(() => {
+    if (activeUserCanvas.activeImageData) {
+      activeUserCanvas.setActiveImageData(null);
+    }
+  }, []);
 
   return (
     <section className="h-screen w-full ">
@@ -22,7 +31,6 @@ export default function Dashboard() {
             Create Canvas
           </Button>
         </div>
-
         <div className="w-full flex justify-center">
           <UserCanvasData />
         </div>
@@ -33,26 +41,30 @@ export default function Dashboard() {
 
 function UserCanvasData() {
   const { loadUserCanvas } = useLoadUserCanvas();
+  console.log(loadUserCanvas.data);
 
   if (loadUserCanvas.isLoading || loadUserCanvas.isPending) {
     return <h1>Loading...</h1>;
   }
 
   return (
-    <div className="gap-2 grid items-center grid-cols-2 md:grid-cols-4 sm:grid-cols-3">
-      {loadUserCanvas.isSuccess ? (
-        <>
+    <>
+      {loadUserCanvas.isSuccess && loadUserCanvas.data?.data ? (
+        <div className="gap-2 grid items-center grid-cols-2 md:grid-cols-4 sm:grid-cols-3">
           {loadUserCanvas.data?.data.data.map((canvas: any) => (
             <CanvasCard
               key={canvas.id}
+              id={canvas.id}
               name={canvas.name}
               createdAt={canvas.createdAt}
             />
           ))}
-        </>
+        </div>
       ) : (
-        <h1>No Canvas Found</h1>
+        <div className="text-center mx-auto">
+          <h1>Failed To Load Canvas</h1>
+        </div>
       )}
-    </div>
+    </>
   );
 }

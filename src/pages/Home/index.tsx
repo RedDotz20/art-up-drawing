@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LoginButton } from '../Home/components/LoginButton';
 import { SignupButton } from '../Home/components/SignUpButton';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth0();
