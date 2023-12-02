@@ -3,34 +3,40 @@ import { SliderValue } from '@nextui-org/react';
 
 interface DrawingStore {
   isDrawing: boolean;
-  isErasing: boolean;
-  eraserSize: SliderValue;
-  lineWidth: SliderValue;
-  lineOpacity: SliderValue;
-  lineColor: string;
-
   setIsDrawing: (isDrawing: boolean) => void;
+
+  isErasing: boolean;
   setIsErasing: (isErasing: boolean) => void;
+
+  eraserSize: SliderValue;
   setEraserSize: (size: SliderValue) => void;
+
+  lineWidth: SliderValue;
   setLineWidth: (width: SliderValue) => void;
+
+  lineOpacity: SliderValue;
   setLineOpacity: (opacity: SliderValue) => void;
+
+  lineColor: string;
   setLineColor: (color: string) => void;
 }
 
-const useDrawingStore = create<DrawingStore>((set) => ({
+export const useDrawingStore = create<DrawingStore>((set) => ({
   isDrawing: false,
-  isErasing: false,
-  eraserSize: 10,
-  lineWidth: 5,
-  lineOpacity: 1,
-  lineColor: 'black',
-
   setIsDrawing: (isDrawing) => set({ isDrawing }),
+
+  isErasing: false,
   setIsErasing: (isErasing) => set({ isErasing }),
+
+  eraserSize: 10,
   setEraserSize: (eraserSize) => set({ eraserSize }),
+
+  lineWidth: 5,
   setLineWidth: (lineWidth) => set({ lineWidth }),
+
+  lineOpacity: 1,
   setLineOpacity: (lineOpacity) => set({ lineOpacity }),
+
+  lineColor: 'black',
   setLineColor: (lineColor) => set({ lineColor }),
 }));
-
-export default useDrawingStore;

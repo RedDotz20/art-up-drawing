@@ -1,9 +1,7 @@
 import { Slider, Button } from '@nextui-org/react';
-
+import { useDrawingStore } from '../store/drawingStore';
 import { GrPowerReset } from 'react-icons/gr';
 import { BiSolidEraser } from 'react-icons/bi';
-
-import useDrawingStore from '../store/drawingStore';
 
 interface MenuProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;

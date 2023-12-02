@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
+  font-family: 'Lexend', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  background-attachment: fixed;
+  margin: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: #333;
+  scrollbar-width: thin;
 }
 
 .cursor-crosshair {

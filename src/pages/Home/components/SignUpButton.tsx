@@ -17,7 +17,8 @@ export const SignupButton = () => {
 
   return (
     <Button
-      className="button__sign-up"
+      className="min-w-[7rem]"
+      variant="shadow"
       onClick={handleSignUp}
     >
       Sign Up

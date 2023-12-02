@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import {
   Dropdown,
   DropdownTrigger,
@@ -5,15 +6,12 @@ import {
   DropdownItem,
   Button,
 } from '@nextui-org/react';
-import { useRef } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiSolidDownload } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaSave } from 'react-icons/fa';
 
 type OptionsProps = { canvasRef: React.RefObject<HTMLCanvasElement> };
-const iconClasses =
-  'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
 export default function Options({ canvasRef }: OptionsProps) {
   //? Upload Canvas Image
@@ -39,7 +37,8 @@ export default function Options({ canvasRef }: OptionsProps) {
 
   const handleUploadClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); //? Trigger the hidden file input
+      //? Trigger the hidden file input
+      fileInputRef.current.click();
     }
   };
 
@@ -61,6 +60,9 @@ export default function Options({ canvasRef }: OptionsProps) {
       const imageData = canvasRef.current.toDataURL();
     }
   };
+
+  const iconClasses =
+    'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
   return (
     <Dropdown>

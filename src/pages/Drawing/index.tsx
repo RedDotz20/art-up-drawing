@@ -1,13 +1,41 @@
 import React, { useEffect, useRef } from 'react';
-import useDrawingStore from './store/drawingStore';
+import { useDrawingStore } from './store/drawingStore';
+import { useUpdateCanvas } from '../../hooks/useUpdateCanvas';
+import { useActiveUserCanvasStore } from '../../store/activeUserCanvasStore';
+import { decodeBase64 } from '../../utils/decodeBase64String';
+
 import UserAvatar from './components/UserAvatar';
 import Options from './components/Options';
 import Menu from './components/Menu';
 
 export default function Drawing() {
   const drawingStore = useDrawingStore();
+  const activeUserCanvas = useActiveUserCanvasStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  const { updateCanvas } = useUpdateCanvas(canvasRef);
+
+  useEffect(() => {
+    if (activeUserCanvas.activeImageData) {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const decodedImage = decodeBase64(activeUserCanvas.activeImageData);
+          const image = new Image();
+          image.onload = function () {
+            ctx.drawImage(image, 0, 0);
+          };
+          image.src = URL.createObjectURL(
+            new Blob([decodedImage], { type: 'image/png' })
+          );
+        }
+      }
+    } else {
+      updateCanvas();
+    }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,9 +44,13 @@ export default function Drawing() {
       if (ctx) {
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.globalAlpha = Number(drawingStore.lineOpacity); // Convert SliderValue to number
+
+        // Convert SliderValue to number
+        ctx.globalAlpha = Number(drawingStore.lineOpacity);
         ctx.strokeStyle = drawingStore.lineColor;
-        ctx.lineWidth = Number(drawingStore.lineWidth); // Convert SliderValue to number
+
+        // Convert SliderValue to number
+        ctx.lineWidth = Number(drawingStore.lineWidth);
         ctxRef.current = ctx;
         ctxRef.current = ctx;
       }
@@ -50,8 +82,7 @@ export default function Drawing() {
     }
 
     if (drawingStore.isErasing) {
-      // Use a white color for erasing (you can set it to the canvas background color)
-      ctxRef.current.strokeStyle = 'white';
+      ctxRef.current.strokeStyle = 'white'; // Use a white color for erasing
       ctxRef.current.lineWidth = Number(drawingStore.eraserSize); // Set the eraser size
     } else {
       ctxRef.current.strokeStyle = drawingStore.lineColor; // Switch back to the drawing color
