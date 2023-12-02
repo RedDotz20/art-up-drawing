@@ -14,7 +14,9 @@ export const LoginButton = () => {
 
   return (
     <Button
-      className="button__login"
+      className="min-w-[7rem]"
+      variant="shadow"
+      color="primary"
       onClick={handleLogin}
     >
       Log In
