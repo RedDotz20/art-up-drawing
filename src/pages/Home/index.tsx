@@ -9,6 +9,7 @@ import heroSectionIcon from '../../assets/hero-section-icon.svg';
 import productFeatureIcon1 from '../../assets/product-feature-icon-1.svg';
 import productFeatureIcon2 from '../../assets/product-feature-icon-2.svg';
 import landingPageEndIcon from '../../assets/landing-page-end-icon.svg';
+import LoadingState from '../../components/LoadingState';
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -21,7 +22,7 @@ export default function Home() {
   }, [isAuthenticated]);
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <LoadingState />;
   }
 
   if (!isAuthenticated) {

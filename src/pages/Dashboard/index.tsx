@@ -5,6 +5,7 @@ import { useLoadUserCanvas } from '../../hooks/useLoadUserCanvas';
 import { useActiveUserCanvasStore } from '../../store/activeUserCanvasStore';
 import NavBar from './components/Navbar';
 import CanvasCard from './components/CanvasCard';
+import LoadingState from '../../components/LoadingState';
 
 export default function Dashboard() {
   const activeUserCanvas = useActiveUserCanvasStore();
@@ -44,7 +45,7 @@ function UserCanvasData() {
   console.log(loadUserCanvas.data);
 
   if (loadUserCanvas.isLoading || loadUserCanvas.isPending) {
-    return <h1>Loading...</h1>;
+    return <LoadingState />;
   }
 
   return (

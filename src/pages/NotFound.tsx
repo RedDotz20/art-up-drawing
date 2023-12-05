@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from '@nextui-org/react';
 
+import NotFoundIcon from '../assets/not-found-icon.svg';
+
 function NotFound() {
   const [mountLoading, setMountLoading] = useState(false);
 
@@ -19,15 +21,31 @@ function NotFound() {
   }, []);
 
   return (
-    <div className="bg-[#333] h-screen w-screen flex flex-col items-center justify-center">
-      <h1 className="text-white text-4xl font-bold mb-8">404 Not Found</h1>
+    <div className="bg-[#1a9cc6] text-white h-screen w-screen flex flex-col items-center justify-center">
+      <div className="flex mb-16">
+        <div className="text-right">
+          <h1 className="text-[#1163b8] text-9xl font-bold">404</h1>
+          <h2 className="text-4xl font-semibold mb-4">Something Went Wrong</h2>
+          <p className="text-2xl overflow-wrap-break-word w-[450px]">
+            The page you are looking for could not be found
+          </p>
+        </div>
+        <img
+          src={NotFoundIcon}
+          alt="NotFoundIcon"
+          width={400}
+        />
+      </div>
+
       {mountLoading && (
         <div className="flex gap-6">
           <Spinner
             size="md"
             color="white"
           />
-          <h1 className="text-white text-xl">Redirecting to Login</h1>
+          <h1 className="text-white text-2xl font-semibold">
+            Redirecting To Home Page
+          </h1>
         </div>
       )}
     </div>
