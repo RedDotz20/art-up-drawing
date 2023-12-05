@@ -6,6 +6,9 @@ import { SignupButton } from '../Home/components/SignUpButton';
 
 import heroSectionImg from '../../assets/hero-section-bg.jpeg';
 import heroSectionIcon from '../../assets/hero-section-icon.svg';
+import productFeatureIcon1 from '../../assets/product-feature-icon-1.svg';
+import productFeatureIcon2 from '../../assets/product-feature-icon-2.svg';
+import landingPageEndIcon from '../../assets/landing-page-end-icon.svg';
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -43,7 +46,6 @@ export default function Home() {
                 <LoginButton />
               </div>
             </div>
-
             <img
               src={heroSectionIcon}
               alt="heroSectionIcon"
@@ -51,7 +53,50 @@ export default function Home() {
             />
           </div>
         </section>
-        <section></section>
+        <section className="h-screen bg-white flex items-center justify-center gap-16">
+          <div className="flex  justify-center items-center mx-16 gap-10">
+            <div className="flex flex-col gap-6">
+              <h1 className="text-[#1a9cc6] text-6xl overflow-wrap-break-word w-[600px] text-right">
+                Seamless Creativity, Effortless Mastery
+              </h1>
+              <p className="overflow-wrap-break-word w-[600px] text-right text-4xl">
+                ArtUp's user-friendly interface puts you in control
+              </p>
+            </div>
+
+            <img
+              src={productFeatureIcon1}
+              alt="productFeatureIcon1"
+              width={400}
+            />
+          </div>
+        </section>
+        <section className="h-screen bg-[#76afbf] flex items-center justify-center gap-16">
+          <img
+            src={productFeatureIcon2}
+            alt="productFeatureIcon2"
+            width={400}
+          />
+
+          <div className="flex flex-col gap-12">
+            <h1 className="text-white text-6xl font-semibold overflow-wrap-break-word w-[600px] text-left">
+              Craft your Artistic Legacy
+            </h1>
+            <p className="text-[#1163b8] overflow-wrap-break-word w-[400px] text-left text-4xl">
+              Start your portfolio, one canvas at a time with ArtUp
+            </p>
+          </div>
+        </section>
+        <section className="h-screen bg-[#1163b8] flex flex-col items-center justify-center gap-16">
+          <img
+            src={landingPageEndIcon}
+            alt="landingPageEndIcon"
+            width={400}
+          />
+          <h1 className="font-semibold text-4xl text-white">
+            Create Your ArtUp Artwork Today!
+          </h1>
+        </section>
       </main>
     );
   }
