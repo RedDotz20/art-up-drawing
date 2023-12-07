@@ -11,9 +11,15 @@ import { BiSolidDownload } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaSave } from 'react-icons/fa';
 
-type OptionsProps = { canvasRef: React.RefObject<HTMLCanvasElement> };
+type OptionsProps = {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  handleSaveCanvas: () => void;
+};
 
-export default function Options({ canvasRef }: OptionsProps) {
+export default function Options({ canvasRef, handleSaveCanvas }: OptionsProps) {
+  // const { user } = useAuth0();
+  // const userAuthId = user!.sub!.substring(6);
+
   //? Upload Canvas Image
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleUploadEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,13 +57,6 @@ export default function Options({ canvasRef }: OptionsProps) {
       a.href = dataURL;
       a.download = 'canvas_image.png';
       a.click();
-    }
-  };
-
-  //TODO: Save Canvas to DB
-  const handleSaveCanvas = () => {
-    if (canvasRef.current) {
-      const imageData = canvasRef.current.toDataURL();
     }
   };
 

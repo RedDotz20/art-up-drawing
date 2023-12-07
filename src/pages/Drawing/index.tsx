@@ -69,10 +69,16 @@ export default function Drawing() {
     }
   };
 
+  const handleSaveCanvas = () => {
+    updateCanvas();
+  };
+
   const endDrawing = () => {
     if (ctxRef.current) {
       ctxRef.current.closePath();
       drawingStore.setIsDrawing(false);
+
+      updateCanvas(); //? Update after mouse lift
     }
   };
 
@@ -101,7 +107,10 @@ export default function Drawing() {
     <div className="bg-slate-700 h-screen w-full flex flex-col items-center justify-center relative">
       <UserAvatar />
       <div className="flex flex-col gap-4 bg-white absolute top-5 left-4 shadow-2xl p-4 rounded-xl min-w-[250px]">
-        <Options canvasRef={canvasRef} />
+        <Options
+          canvasRef={canvasRef}
+          handleSaveCanvas={handleSaveCanvas}
+        />
         <Menu
           canvasRef={canvasRef}
           ctxRef={ctxRef}

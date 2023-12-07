@@ -33,5 +33,5 @@ export default function useDeleteCanvas(id: string) {
   //   }
   // }, [editCanvasMutation.data, navigate]);
 
-  return { deleteUserCanvas };
+  return { deleteCanvasMutation, deleteUserCanvas };
 }
