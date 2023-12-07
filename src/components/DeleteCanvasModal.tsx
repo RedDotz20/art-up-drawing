@@ -7,15 +7,26 @@ import {
   Button,
 } from '@nextui-org/react';
 
+import useDeleteCanvas from '../hooks/useDeleteCanvas';
+
 interface DeleteModalProps {
+  id: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function DeleteCanvasModal({
+  id,
   isOpen,
   onClose,
 }: DeleteModalProps) {
+  const { deleteUserCanvas } = useDeleteCanvas(id);
+
+  const handleDelete = () => {
+    deleteUserCanvas();
+    onClose();
+  };
+
   return (
     <Modal
       size="xs"
@@ -26,23 +37,21 @@ export default function DeleteCanvasModal({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
-              Modal Title
-            </ModalHeader>
-            <ModalBody>asdf</ModalBody>
+            <ModalHeader className="flex flex-col gap-1">Alert</ModalHeader>
+            <ModalBody>Confirm Delete?</ModalBody>
             <ModalFooter>
               <Button
-                color="danger"
+                color="primary"
                 variant="light"
                 onPress={onClose}
               >
-                Close
+                CANCEL
               </Button>
               <Button
-                color="primary"
-                onPress={onClose}
+                color="danger"
+                onPress={handleDelete}
               >
-                Action
+                DELETE
               </Button>
             </ModalFooter>
           </>

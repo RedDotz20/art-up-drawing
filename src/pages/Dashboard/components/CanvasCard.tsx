@@ -29,6 +29,7 @@ export default function CanvasCard({ id, name, createdAt }: CanvasCardProps) {
   return (
     <>
       <DeleteCanvasModal
+        id={id}
         isOpen={isOpen}
         onClose={onClose}
       />
