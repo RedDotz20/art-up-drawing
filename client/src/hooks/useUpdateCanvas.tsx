@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateCanvasApi } from '../api/canvasAPI';
 import { useParams } from 'react-router-dom';
+import { updateCanvasApi } from '../api/canvasAPI';
 
 interface canvasData {
   canvasId: string;
