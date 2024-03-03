@@ -1,11 +1,5 @@
 import { useRef } from 'react';
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from '@nextui-org/react';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@nextui-org/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiSolidDownload } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -55,33 +49,26 @@ export default function Options({ canvasRef }: OptionsProps) {
   };
 
   //TODO: Save Canvas to DB
-  const handleSaveCanvas = () => {
-    if (canvasRef.current) {
-      const imageData = canvasRef.current.toDataURL();
-    }
-  };
+  // const handleSaveCanvas = () => {
+  //   if (canvasRef.current) {
+  //     const imageData = canvasRef.current.toDataURL();
+  //   }
+  // };
 
-  const iconClasses =
-    'text-xl text-default-500 pointer-events-none flex-shrink-0';
+  const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button
-          aria-label="Options"
-          startContent={<GiHamburgerMenu className={iconClasses} />}
-        >
+        <Button aria-label="Options" startContent={<GiHamburgerMenu className={iconClasses} />}>
           Options
         </Button>
       </DropdownTrigger>
-      <DropdownMenu
-        variant="faded"
-        aria-label="Dropdown menu with icons"
-      >
+      <DropdownMenu variant="faded" aria-label="Dropdown menu with icons">
         <DropdownItem
           key="save"
           startContent={<FaSave className={iconClasses} />}
-          onClick={handleSaveCanvas}
+          // onClick={handleSaveCanvas}
         >
           Save
         </DropdownItem>

@@ -6,6 +6,12 @@ import { useActiveUserCanvasStore } from '../../store/activeUserCanvasStore';
 import NavBar from './components/Navbar';
 import CanvasCard from './components/CanvasCard';
 
+interface CanvasInterface {
+  id: string;
+  name: string;
+  createdAt: string;
+}
+
 export default function Dashboard() {
   const activeUserCanvas = useActiveUserCanvasStore();
   const { generateCanvasMutation, generateCanvas } = useGenerateCanvas();
@@ -14,7 +20,7 @@ export default function Dashboard() {
     if (activeUserCanvas.activeImageData) {
       activeUserCanvas.setActiveImageData(null);
     }
-  }, []);
+  }, [activeUserCanvas]);
 
   return (
     <section className="h-screen w-full ">
@@ -22,12 +28,7 @@ export default function Dashboard() {
       <div className="px-12 py-8 text-white flex flex-col justify-center items-center">
         <div className="max-w-[726px] flex items-center w-full justify-between mb-6  text-white">
           <div>Recent Canvas</div>
-          <Button
-            color="success"
-            isLoading={generateCanvasMutation.isPending}
-            onClick={generateCanvas}
-            size="sm"
-          >
+          <Button color="success" isLoading={generateCanvasMutation.isPending} onClick={generateCanvas} size="sm">
             Create Canvas
           </Button>
         </div>
@@ -51,13 +52,8 @@ function UserCanvasData() {
     <>
       {loadUserCanvas.isSuccess && loadUserCanvas.data?.data ? (
         <div className="gap-2 grid items-center grid-cols-2 md:grid-cols-4 sm:grid-cols-3">
-          {loadUserCanvas.data?.data.data.map((canvas: any) => (
-            <CanvasCard
-              key={canvas.id}
-              id={canvas.id}
-              name={canvas.name}
-              createdAt={canvas.createdAt}
-            />
+          {loadUserCanvas.data?.data.data.map((canvas: CanvasInterface) => (
+            <CanvasCard key={canvas.id} id={canvas.id} name={canvas.name} createdAt={canvas.createdAt} />
           ))}
         </div>
       ) : (

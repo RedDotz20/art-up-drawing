@@ -5,35 +5,35 @@ import { useNavigate } from 'react-router-dom';
 import { createCanvasApi } from '../api/canvasAPI';
 
 export const useGenerateCanvas = () => {
-	const { user } = useAuth0();
-	const navigate = useNavigate();
-	// const queryClient = useQueryClient();
+  const { user } = useAuth0();
+  const navigate = useNavigate();
+  // const queryClient = useQueryClient();
 
-	const generateCanvasMutation = useMutation({
-		mutationFn: (userId: string) => {
-			return createCanvasApi(userId);
-		},
-		onSuccess: (_newImageData) => {
-			//? Update Canvas View Directly
-			// queryClient.setQueryData(['userCanvasList'], newImageData);
-		},
-		onError: (error) => {
-			console.log(error);
-		},
-	});
+  const generateCanvasMutation = useMutation({
+    mutationFn: (userId: string) => {
+      return createCanvasApi(userId);
+    },
+    //? Update Canvas View Directly
+    // onSuccess: (newImageData) => {
+    // 	queryClient.setQueryData(['userCanvasList'], newImageData);
+    // },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
-	const generateCanvas = () => {
-		const userAuthId = user!.sub!.substring(6);
-		const newCanvas = generateCanvasMutation.mutate(userAuthId);
-		return newCanvas;
-	};
+  const generateCanvas = () => {
+    const userAuthId = user!.sub!.substring(6);
+    const newCanvas = generateCanvasMutation.mutate(userAuthId);
+    return newCanvas;
+  };
 
-	useEffect(() => {
-		if (generateCanvasMutation.data && generateCanvasMutation.isSuccess) {
-			const generatedCanvasId = generateCanvasMutation.data.data.data.id;
-			navigate(`/canvas/${generatedCanvasId}`);
-		}
-	}, [generateCanvasMutation.data, navigate]);
+  useEffect(() => {
+    if (generateCanvasMutation.data && generateCanvasMutation.isSuccess) {
+      const generatedCanvasId = generateCanvasMutation.data.data.data.id;
+      navigate(`/canvas/${generatedCanvasId}`);
+    }
+  }, [generateCanvasMutation.data, navigate, generateCanvasMutation.isSuccess]);
 
-	return { generateCanvasMutation, generateCanvas };
+  return { generateCanvasMutation, generateCanvas };
 };

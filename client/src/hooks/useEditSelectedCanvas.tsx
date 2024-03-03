@@ -6,40 +6,40 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export const useEditSelectedCanvas = (id: string) => {
-	const { user } = useAuth0();
-	const userAuthId = user!.sub!.substring(6);
-	const activeUserCanvas = useActiveUserCanvasStore();
-	const navigate = useNavigate();
+  const { user } = useAuth0();
+  const userAuthId = user!.sub!.substring(6);
+  const activeUserCanvas = useActiveUserCanvasStore();
+  const navigate = useNavigate();
 
-	const editCanvasMutation = useMutation({
-		mutationFn: (canvas: { userId: string; canvasId: string }) => {
-			return editCanvasApi(canvas);
-		},
-		onSuccess: (canvasData) => {
-			if (canvasData) {
-				const imageData = canvasData.data.data.imageData;
-				activeUserCanvas.setActiveImageData(imageData);
-			}
-		},
-		onError: (error) => {
-			console.log(error);
-		},
-	});
+  const editCanvasMutation = useMutation({
+    mutationFn: (canvas: { userId: string; canvasId: string }) => {
+      return editCanvasApi(canvas);
+    },
+    onSuccess: (canvasData) => {
+      if (canvasData) {
+        const imageData = canvasData.data.data.imageData;
+        activeUserCanvas.setActiveImageData(imageData);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
-	const editSelectedCanvas = () => {
-		const canvasData = { userId: userAuthId, canvasId: id };
-		editCanvasMutation.mutate(canvasData);
-	};
+  const editSelectedCanvas = () => {
+    const canvasData = { userId: userAuthId, canvasId: id };
+    editCanvasMutation.mutate(canvasData);
+  };
 
-	useEffect(() => {
-		if (editCanvasMutation.data && editCanvasMutation.isSuccess) {
-			const imageData = editCanvasMutation.data.data.data.imageData;
-			activeUserCanvas.setActiveImageData(imageData);
-			console.log('state:', activeUserCanvas.activeImageData);
+  useEffect(() => {
+    if (editCanvasMutation.data && editCanvasMutation.isSuccess) {
+      const imageData = editCanvasMutation.data.data.data.imageData;
+      activeUserCanvas.setActiveImageData(imageData);
+      console.log('state:', activeUserCanvas.activeImageData);
 
-			navigate(`/canvas/${id}`);
-		}
-	}, [editCanvasMutation.data, navigate]);
+      navigate(`/canvas/${id}`);
+    }
+  }, [id, navigate, editCanvasMutation.data, activeUserCanvas, editCanvasMutation.isSuccess]);
 
-	return { editSelectedCanvas };
+  return { editSelectedCanvas };
 };

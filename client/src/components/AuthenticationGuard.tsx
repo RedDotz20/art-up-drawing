@@ -1,15 +1,13 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 interface AuthenticationGuardProps {
-	component: React.ComponentType<any>;
+  component: React.ComponentType<JSX.Element>;
 }
 
-export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
-	component,
-}) => {
-	const Component = withAuthenticationRequired(component, {
-		onRedirecting: () => <div className="page-layout">LOADING ...</div>,
-	});
+export const AuthenticationGuard = ({ component }: AuthenticationGuardProps) => {
+  const Component = withAuthenticationRequired(component, {
+    onRedirecting: () => <div className="page-layout">LOADING ...</div>,
+  });
 
-	return <Component />;
+  return <Component key={null} type={undefined} props={undefined} />;
 };
